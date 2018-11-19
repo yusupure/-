@@ -54,8 +54,9 @@ ROBOTSTXT_OBEY = False
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #DOWNLOADER_MIDDLEWARES = {
 #    'allfullspidersearch.middlewares.AllfullspidersearchDownloaderMiddleware': 543,
+#'scrapy.contrib.downloadermiddleware.useragent.UserAgentMiddleware': None,#随机使用USERAGENT方法
 #}
-
+RANDOM_USER_AGENT='random'
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html
 #EXTENSIONS = {
@@ -64,9 +65,24 @@ ROBOTSTXT_OBEY = False
 
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'allfullspidersearch.pipelines.AllfullspidersearchPipeline': 300,
-#}
+ITEM_PIPELINES = {
+   #'allfullspidersearch.pipelines.AllfullspidersearchPipeline': 300,
+    #'allfullspidersearch.pipelines.Newjsondownload': 300,
+    #'allfullspidersearch.pipelines.NkJsondownPipline': 300,
+    #'allfullspidersearch.pipelines.NEWimagedownPipline': 300,
+    'allfullspidersearch.pipelines.NkimagedownPipline': 300,
+    # 'allfullspidersearch.pipelines.NkJsondownPipline': 300,
+    # 'allfullspidersearch.pipelines.NkJsondownPipline': 300,
+    # 'allfullspidersearch.pipelines.NkJsondownPipline': 300,
+}
+IMAGES_URLS_FIELD='image_list_url'
+IMAGES_STORE='/allfullspidersearch/allfullspidersearch/images/'
+
+MYSQL_HOST='127.0.0.1'
+MYSQL_PORT=3339
+MYSQL_USER='root'
+MYSQL_PASSWORD='root'
+MYSQL_DBNAME='test'
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
