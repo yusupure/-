@@ -3,7 +3,7 @@ import re
 import requests
 from scrapy.selector import Selector
 import pymysql
-conn=pymysql.connect(host='192.168.7.126',port=3336,db='TD_OA',user='myoa999',password='myoa999')
+conn=pymysql.connect(host='****',port=***,db='***',user='***',password='***')
 cur=conn.cursor()
 class proxy_ip_list():
     def get_ip(self):
