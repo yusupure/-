@@ -121,3 +121,34 @@ class NkinsertsqlPipline(object):
         item['image_list_id'], item['title'], item['datelist'], item['category'], item['mainbody'], item['zang'],
         item['sc'], item['pl'],item['image_list_url'],item['image_list_path'])
         cursor.execute(insert_sql,parmer)
+        
+from elasticsearch_dsl import DocType, Date, Integer, Keyword, Text, connections,Completion
+es=connections.connections.create_connection(es_save_to._doc_type.using)
+def gen_suggest(index,info_tuple):
+    #根据字符串生成所搜建议数据
+    #python重要性titel:10
+    used_words=set()
+    suggest=[]
+    for text,weight in info_tuple:
+        if text:
+            #调用es的analyze借口分析字符串
+            words=es.indices.analyze(index=index,analyzer="ik_max_word",params={'filter':['lowercase']},body=text)
+            anylzed_words=set([r['token'] for r in words['tokens'] if len(r["token"])>1])
+            new_words=anylzed_words-used_words
+        else:
+            new_words=set()
+        if new_words:
+            suggest.append({"input":list(new_words),"weight":weight})
+    return suggest
+
+class ElasicsearchPipline(object):
+    def process_item(self, item, spider):
+        article=ArticleType()
+        article.title =item['title']
+        article.datalist =item['datalist']
+        article.dianzang =item['dianzang']
+        article.shouchang =item['shouchang']
+        article.pinglunshu =item['pinglunshu']
+        article.suggest = gen_suggest(article._doc_type.index, ((article.title, 10),(article.dianzang,7)))  # 用来控制模糊搜索设置权重weight
+        article.save()
+        return item
