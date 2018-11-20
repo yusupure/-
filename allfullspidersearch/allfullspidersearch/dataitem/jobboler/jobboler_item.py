@@ -45,7 +45,7 @@ class jobboleSearchItem(scrapy.Item):
         #合并列表内的字符用逗号串联
         output_processor=Join(',')
     )
-    mainbody=scrapy.Field()#output_processor = MapCompose(return_value)))
+    mainbody=scrapy.Field(iutput_processor = MapCompose(return_value),output_processor=Join(','))#output_processor = MapCompose(return_value)))
     zang=scrapy.Field(input_processor=MapCompose(return_number))
     sc=scrapy.Field(input_processor=MapCompose(return_number))
     pl=scrapy.Field(input_processor=MapCompose(return_number))
