@@ -1,9 +1,8 @@
-
 import re
 import requests
 from scrapy.selector import Selector
 import pymysql
-conn=pymysql.connect(host='****',port=***,db='***',user='***',password='***')
+conn=pymysql.connect(host='127.0.0.1',port=3339,db='test',user='root',password='root')
 cur=conn.cursor()
 class proxy_ip_list():
     def get_ip(self):
@@ -24,9 +23,9 @@ class proxy_ip_list():
                 proxylist.append((ip,port,leixing,speed))
             for proxylistsa in proxylist:
                 insert_sql='''
-                insert into aproxyip(ip,port,leixing,speed,http) values (%s,%s,%s,%s,%s)
+                insert into proxyiplist(ip,port,niming,htp,speed) values (%s,%s,%s,%s,%s)
                 '''
-                parmer=proxylistsa[0],proxylistsa[1],proxylistsa[2],proxylistsa[3],'http'
+                parmer=proxylistsa[0],proxylistsa[1],proxylistsa[2],'http',proxylistsa[3]
                 try:
                     cur.execute(insert_sql,parmer)
                     print('ok')
@@ -34,11 +33,45 @@ class proxy_ip_list():
                 except:
                     pass
 
+    def delete_ip(self,ip):
+        delete_sql='''delete from proxyiplist where ip='{}' '''.format(ip)
+        cur.execute(delete_sql)
+        conn.commit()
+        return True
+    def check_ip(self,ip,port):
+        iplist='http://{}:{}'.format(ip,port)
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36'}
+        try:
+            proxy={
+                'http':iplist,'https':iplist
+            }
+            reposon=requests.get('http://www.baidu.com',headers=headers,proxies=proxy,timeout=3)
+        except Exception as e:
+            print('代理IP失败')
+            self.delete_ip(ip)
+            return False
+        else:
+            code=reposon.status_code
+            if code>=200 and code<300:
+                print(iplist)
+                return True
+            else:
+                print('代理IP失败2')
+                self.delete_ip(ip)
+                print(False)
+
     def load_ip(self):
-        select_sql='''select ip,port from aproxyip ORDER BY RAND() limit 1'''
+        select_sql='''select ip,port from proxyiplist ORDER BY RAND() limit 1'''
         cur.execute(select_sql)
         for iplist in cur.fetchall():
-            print(iplist[0],iplist[1])
+            ip=str(iplist[0])
+            port=str(iplist[1])
+            just=self.check_ip(ip,port)
+            if just:
+                return 'http://{0}:{1}'.format(ip,port)
+            else:
+                return self.load_ip()
 
 if __name__ == '__main__':
     iplist=proxy_ip_list()
