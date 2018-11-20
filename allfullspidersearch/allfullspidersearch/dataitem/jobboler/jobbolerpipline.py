@@ -92,16 +92,16 @@ class NkinsertsqlPipline(object):
         self.dbpool=dbpool
     @classmethod
     def from_settings(cls,settings):
-        dbpool=adbapi.ConnectionPool("pymysql",
-               host=settings["MYSQL_HOST"],
-               port=settings["MYSQL_PORT"],
-               user=settings["MYSQL_USER"],
-               password=settings["MYSQL_PASSWORD"],
-               db=settings["MYSQL_DBNAME"],
-               charset='utf8',
-               use_unicode=True,
-               cursorclass=pymysql.cursors.DictCursor
-                )
+        dbpool=adbapi.ConnectionPool(
+            "pymysql",
+            host=settings["MYSQL_HOST"],
+            port=settings["MYSQL_PORT"],
+            user=settings["MYSQL_USER"],
+            password=settings["MYSQL_PASSWORD"],
+            db=settings["MYSQL_DBNAME"],
+            #charset='utf8',
+            #use_unicode=True,
+            cursorclass=pymysql.cursors.DictCursor)
         return cls(dbpool)
 
     def process_item(self, item, spider):
@@ -110,13 +110,14 @@ class NkinsertsqlPipline(object):
 
     def handle_error(self,Failure):
         print(Failure)
+
     def insert_handle(self,cursor,item):
         insert_sql = '''insert into 
                 ajobler(id,title,datelist,category,mainbody,zang,sc,pl,image_list_url,image_list_path) 
-                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
+                VALUES (%s,%s,%s,%s,%s,%s,%s,%s)
                 ON DUPLICATE KEY UPDATE zang=VALUES(zang)
-                '''
+                '''#ON DUPLICATE KEY UPDATE zang=VALUES(zang)
         parmer = (
         item['image_list_id'], item['title'], item['datelist'], item['category'], item['mainbody'], item['zang'],
-        item['sc'], item['pl'], item['image_list_url'], item['image_list_path'])
+        item['sc'], item['pl'],item['image_list_url'],item['image_list_path'])
         cursor.execute(insert_sql,parmer)
