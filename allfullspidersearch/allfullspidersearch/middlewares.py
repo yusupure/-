@@ -8,6 +8,9 @@
 from scrapy import signals
 from fake_useragent import UserAgent
 
+from allfullspidersearch.proxyip.proxy_ip import proxy_ip_list
+
+
 class AllfullspidersearchSpiderMiddleware(object):
     # Not all methods need to be defined. If a method is not defined,
     # scrapy acts as if the spider middleware does not modify the
@@ -115,4 +118,8 @@ class RandomUserAgentMiddlerware(object):
         def get_ta():
             return getattr(self.ua,self.ua_type)
         request.headers.setdefault(self.ua,get_ta())
-
+#提取代理IP接口方法
+class RandomproxyipMiddlerware(object):
+    def process_request(self, request, spider):
+        get_ip=proxy_ip_list()
+        request.meta['proxy']=get_ip.load_ip()
