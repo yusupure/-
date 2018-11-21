@@ -58,9 +58,9 @@ class LagouSpider(CrawlSpider):
         acritel.add_css('publish_time', ".job_request .publish_time::text")
         acritel.add_css('job_detail', "#job_detail .job_bt p::text")
         acritel.add_css('work_addr', ".work_addr a::text")
-        acritel.add_xpath('fourSquare', "//ul[@class='c_feature']/li[1]/text()")
-        acritel.add_xpath('trend', "//ul[@class='c_feature']/li[2]/text()")
-        acritel.add_xpath('figure', "//ul[@class='c_feature']/li[3]/text()")
+        acritel.add_css('fourSquare', "#job_company > dd > ul > li:nth-child(1)")
+        acritel.add_css('trend', "#job_company > dd > ul > li:nth-child(2)")
+        acritel.add_css('figure', "#job_company > dd > ul > li:nth-child(3)")
         acritel.add_css('home', ".c_feature li a::attr(href)")
         items=acritel.load_item()
         return items
