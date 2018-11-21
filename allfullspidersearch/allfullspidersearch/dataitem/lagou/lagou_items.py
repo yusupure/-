@@ -16,19 +16,26 @@ class lagouItemloader(ItemLoader):
 
 def return_value(value):
     return value
-def clear_data(value):
-    data=value.replace('\n','').strip()
+
+def check_date(value):
+    data=re.findall(r'</i> (.*) <span',value,re.S)
+    data=''.join(data).strip()
     return data
+
+def cregt_data(value):
+    work_addr=''.join(value).replace('查看地图','')
+    return work_addr
 class LagousearchItemload(scrapy.Item):
-    job_id=scrapy.Field()
+    job_id=scrapy.Field(input_processor=MapCompose(MD5_sh))
     job_company=scrapy.Field()
     job_position=scrapy.Field()
     job_request=scrapy.Field(output_processor=MapCompose(return_value))
     job_detail=scrapy.Field(input_processor=MapCompose(return_value),output_processor=Join(''))
     publish_time=scrapy.Field()
-    work_addr=scrapy.Field(input_processor=MapCompose(return_value),output_processor=Join(''))
+    work_addr=scrapy.Field(input_processor=MapCompose(return_value),output_processor=(cregt_data))
     job_feature=scrapy.Field()
-    fourSquare=scrapy.Field(input_processor=MapCompose(return_value),output_processor=MapCompose(clear_data))
-    trend=scrapy.Field(input_processor=MapCompose(return_value),output_processor=Join(''))
-    figure=scrapy.Field(input_processor=MapCompose(return_value),output_processor=Join(''))
+    fourSquare=scrapy.Field(input_processor=MapCompose(check_date))
+    trend=scrapy.Field(input_processor=MapCompose(check_date))
+    figure=scrapy.Field(input_processor=MapCompose(check_date))
     home=scrapy.Field()
+
