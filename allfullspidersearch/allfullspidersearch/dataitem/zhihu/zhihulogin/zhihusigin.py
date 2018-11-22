@@ -16,8 +16,8 @@ def zhihu_login():
     brown.get(url)
     brown.find_element_by_css_selector(".SignContainer-switch span").click()
     sleep(3)
-    brown.find_element_by_css_selector(".SignFlow-accountInput input").send_keys('13560414027')
-    brown.find_element_by_css_selector(".SignFlow-password .SignFlowInput .Input-wrapper input").send_keys('abc.12345')
+    brown.find_element_by_css_selector(".SignFlow-accountInput input").send_keys('0000')
+    brown.find_element_by_css_selector(".SignFlow-password .SignFlowInput .Input-wrapper input").send_keys('0000')
     sleep(5)
     try:
         img=brown.find_element_by_css_selector(".Captcha-chineseContainer img")
