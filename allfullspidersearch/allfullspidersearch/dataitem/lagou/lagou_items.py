@@ -25,17 +25,24 @@ def check_date(value):
 def cregt_data(value):
     work_addr=''.join(value).replace('查看地图','')
     return work_addr
+
+def job_detail(value):
+    data=value.replace('/','').strip()
+    return data
+
 class LagousearchItemload(scrapy.Item):
     job_id=scrapy.Field(input_processor=MapCompose(MD5_sh))
     job_company=scrapy.Field()
     job_position=scrapy.Field()
-    job_request=scrapy.Field(output_processor=MapCompose(return_value))
+    job_salary=scrapy.Field(input_processor=MapCompose(job_detail))
+    job_address = scrapy.Field(input_processor=MapCompose(job_detail))
+    job_experience = scrapy.Field(input_processor=MapCompose(job_detail))
+    job_education = scrapy.Field(input_processor=MapCompose(job_detail))
+    job_request = scrapy.Field(input_processor=MapCompose(job_detail))
     job_detail=scrapy.Field(input_processor=MapCompose(return_value),output_processor=Join(''))
     publish_time=scrapy.Field()
     work_addr=scrapy.Field(input_processor=MapCompose(return_value),output_processor=(cregt_data))
-    job_feature=scrapy.Field()
     fourSquare=scrapy.Field(input_processor=MapCompose(check_date))
     trend=scrapy.Field(input_processor=MapCompose(check_date))
     figure=scrapy.Field(input_processor=MapCompose(check_date))
     home=scrapy.Field()
-
