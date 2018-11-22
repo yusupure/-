@@ -12,6 +12,7 @@ class ZhihuSpider(scrapy.Spider):
     #start_urls = ['https://www.zhihu.com']
     url='https://www.zhihu.com/api/v3/feed/topstory/recommend?session_token=e6cd631e8aed41f5a4a7e5be48a05cce&desktop=true&limit=7&action=down&after_id=5'
     def start_requests(self):
+        #meta={'dont_redirect':True,'handle_httpstatus_list':[401,301]}取消SCRAPY内过滤错误返回CODE，取消重定向处理
         yield Request(url=self.url,meta={'dont_redirect':True,'handle_httpstatus_list':[401,301]},callback=self.parse)
  
     def parse(self, response):
