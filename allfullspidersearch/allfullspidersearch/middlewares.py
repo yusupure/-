@@ -117,7 +117,7 @@ class RandomUserAgentMiddlerware(object):
     def process_request(self, request, spider):
         def get_ta():
             return getattr(self.ua,self.ua_type)
-        request.headers.setdefault(self.ua,get_ta())
+        request.headers.setdefault('User_Agent',get_ta())
 #提取代理IP接口方法
 class RandomproxyipMiddlerware(object):
     def process_request(self, request, spider):
