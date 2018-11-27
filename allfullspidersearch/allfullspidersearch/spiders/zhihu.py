@@ -2,13 +2,14 @@
 import scrapy
 from scrapy import Request
 import json
-
+import datetime
 from scrapy.loader import ItemLoader
 from urllib.parse import urlencode
-from allfullspidersearch.dataitem.zhihu.zhihu_items import  ZhihuItemLoader
+from allfullspidersearch.dataitem.zhihu.zhihu_items import zhihusjsonItemLoader, ZhihuItemLoader
+from allfullspidersearch.dataitem.zhihu.zhihulogin.cookiesupload import cookiesupload
 
 from allfullspidersearch.dataitem.zhihu.zhihulogin.zhihusigin import zhihu_login
-from allfullspidersearch.dataitem.zhihu.zhihulogin.zhihuupload import cookiesupload
+from allfullspidersearch.dataset.dataset import MD5_sh
 
 
 class ZhihuSpider(scrapy.Spider):
@@ -34,8 +35,8 @@ class ZhihuSpider(scrapy.Spider):
                     try:
                         id=jsonlists['target']['question']['id']
                         urldata='https://www.zhihu.com/question/{}'.format(id)
-                        yield Request(url='https://www.zhihu.com/question/27182640',callback = self.parer_deltie)
-                        #yield Request(url_detail.format(id),meta={'userid':id},callback = self.parer_deltie_long)
+                        #yield Request(url='https://www.zhihu.com/question/27182640',callback = self.parer_deltie)
+                        yield Request(url_detail.format('27182640'),callback = self.parer_deltie_long)
                     except:
                         pass
             # if 'paging' in jsonlist.keys() and jsonlist['paging']['is_end']==False:
@@ -50,12 +51,33 @@ class ZhihuSpider(scrapy.Spider):
         acritel_zhihu.add_css('zhihu_tags','.QuestionHeader-topics ::text')
         acritel_zhihu.add_css('zhihu_itemInner',".NumberBoard-itemInner strong::attr(title)")
         acritel_zhihu.add_css('zhihu_item', ".NumberBoard-itemInner strong::attr(title)")
-        acritel_zhihu.add_css('zhihu_detail', ".QuestionHeader-detail ")
-        #acritel_zhihu.add_css('zhihu_headerText','')
-        #acritel_zhihu.add_css('zhihu_unescapable','')
         items=acritel_zhihu.load_item()
         return items
-    #
-    # def parer_deltie_long(self,reponse):
-    #     jsonlist=json.loads(reponse.text)
-    #     for josnlists in jsonlist:
+
+    def parer_deltie_long(self,reponse):
+        jsonlist=json.loads(reponse.text)
+        is_end=jsonlist['paging']['is_end']
+        nextpage=jsonlist['paging']['next']
+        if 'data' in jsonlist and jsonlist.keys():
+            for jsonlists in jsonlist.get('data'):
+                answer_item = zhihusjsonItemLoader()
+
+                answer_item["url_object_id"] = MD5_sh(jsonlists["url"])
+                answer_item["answer_id"] = jsonlists["id"]
+                answer_item["question_id"] = jsonlists["question"]["id"]
+                answer_item["author_id"] = jsonlists["author"]["id"] if "id" in jsonlists["author"] else None
+                answer_item["author_name"] = jsonlists["author"]["name"] if "name" in jsonlists["author"] else None
+
+                answer_item["content"] = jsonlists["content"] if "content" in jsonlists else None
+                answer_item["praise_num"] = jsonlists["voteup_count"]
+                answer_item["comments_num"] = jsonlists["comment_count"]
+                answer_item["url"] = "https://www.zhihu.com/question/{0}/answer/{1}".format(jsonlists["question"]["id"],
+                                                                                            jsonlists["id"])
+                answer_item["update_time"] = jsonlists["updated_time"]
+                answer_item["crawl_time"] = datetime.datetime.now()
+
+                yield answer_item
+
+
+        if not is_end:
+            yield Request(nextpage,callback = self.parer_deltie_long)
