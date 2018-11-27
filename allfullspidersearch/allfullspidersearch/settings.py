@@ -80,10 +80,10 @@ ITEM_PIPELINES = {
 IMAGES_URLS_FIELD='image_list_url'
 IMAGES_STORE='/allfullspidersearch/allfullspidersearch/images/'
 
-MYSQL_HOST='192.168.7.126'
+MYSQL_HOST='****'
 MYSQL_PORT=3336
-MYSQL_USER='myoa999'
-MYSQL_PASSWORD='myoa999'
+MYSQL_USER='***'
+MYSQL_PASSWORD='*****'
 MYSQL_DBNAME='TD_OA'
 
 # Enable and configure the AutoThrottle extension (disabled by default)
