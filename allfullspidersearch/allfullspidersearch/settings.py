@@ -46,16 +46,17 @@ ROBOTSTXT_OBEY = False
 
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
-#SPIDER_MIDDLEWARES = {
+# SPIDER_MIDDLEWARES = {
 #    'allfullspidersearch.middlewares.AllfullspidersearchSpiderMiddleware': 543,
-#}
+# }
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    'allfullspidersearch.middlewares.AllfullspidersearchDownloaderMiddleware': 543,
-#'scrapy.contrib.downloadermiddleware.useragent.UserAgentMiddleware': None,#随机使用USERAGENT方法
-#}
+DOWNLOADER_MIDDLEWARES = {
+   'allfullspidersearch.middlewares.AllfullspidersearchDownloaderMiddleware': 543,
+    'allfullspidersearch.middlewares.RandomUserAgentMiddlerware':544,
+    'scrapy.contrib.downloadermiddleware.useragent.UserAgentMiddleware': None,#随机使用USERAGENT方法
+}
 RANDOM_USER_AGENT='random'
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html
@@ -66,23 +67,24 @@ RANDOM_USER_AGENT='random'
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   #'allfullspidersearch.pipelines.AllfullspidersearchPipeline': 300,
-    #'allfullspidersearch.pipelines.Newjsondownload': 300,
-    #'allfullspidersearch.pipelines.NkJsondownPipline': 300,
-    #'allfullspidersearch.pipelines.NEWimagedownPipline': 300,
-    'allfullspidersearch.pipelines.NkimagedownPipline': 300,
+   'allfullspidersearch.dataitem.zhihu.zhihu_pipline.zhihuanswerPipline': 300,
+    # 'allfullspidersearch.pipelines.Newjsondownload': 300,
+    # 'allfullspidersearch.pipelines.NkJsondownPipline': 300,
+    # 'allfullspidersearch.pipelines.NEWimagedownPipline': 300,
+    # 'allfullspidersearch.pipelines.NkimagedownPipline': 300,
     # 'allfullspidersearch.pipelines.NkJsondownPipline': 300,
     # 'allfullspidersearch.pipelines.NkJsondownPipline': 300,
-    # 'allfullspidersearch.pipelines.NkJsondownPipline': 300,
+    # 'allfullspidersearch.pipelines.NkinsertsqlPipline': 300,
+    # 'allfullspidersearch.dataitem.lagou.lagou_pipline.ElasicsearchPipline': 300,
 }
 IMAGES_URLS_FIELD='image_list_url'
 IMAGES_STORE='/allfullspidersearch/allfullspidersearch/images/'
 
-MYSQL_HOST='127.0.0.1'
-MYSQL_PORT=3339
-MYSQL_USER='root'
-MYSQL_PASSWORD='root'
-MYSQL_DBNAME='test'
+MYSQL_HOST='192.168.7.126'
+MYSQL_PORT=3336
+MYSQL_USER='myoa999'
+MYSQL_PASSWORD='myoa999'
+MYSQL_DBNAME='TD_OA'
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
@@ -104,3 +106,6 @@ MYSQL_DBNAME='test'
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+# 数据库时间格式
+SQL_DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
+SQL_DATE_FORMAT = "%Y-%m-%d"
