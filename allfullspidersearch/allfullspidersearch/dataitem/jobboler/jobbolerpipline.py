@@ -123,7 +123,7 @@ class NkinsertsqlPipline(object):
         cursor.execute(insert_sql,parmer)
         
 from elasticsearch_dsl import DocType, Date, Integer, Keyword, Text, connections,Completion
-es=connections.connections.create_connection(es_save_to._doc_type.using)
+es=connections.connections.create_connection(ArticleType._doc_type.using)
 def gen_suggest(index,info_tuple):
     #根据字符串生成所搜建议数据
     #python重要性titel:10
@@ -145,7 +145,7 @@ class ElasicsearchPipline(object):
     def process_item(self, item, spider):
         article=ArticleType()
         article.title =item['title']
-        article.datalist =item['datalist']
+        article.datalist =item['datelist']
         article.dianzang =item['dianzang']
         article.shouchang =item['shouchang']
         article.pinglunshu =item['pinglunshu']
