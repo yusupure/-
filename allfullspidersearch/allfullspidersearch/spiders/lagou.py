@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+#scrapy genspider -t crawl lagou www.lagou.com创建方法
 import scrapy
 from scrapy.linkextractors import LinkExtractor
 from scrapy.loader import ItemLoader
