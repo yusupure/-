@@ -15,7 +15,8 @@ import pymysql
 from twisted.enterprise import adbapi
 import pymysql.cursors
 from allfullspidersearch.dataitem.jobboler.jobboler_es_sql import ArticleType
-
+import redis
+redis_cli=redis.StrictRedis(host="127.0.0.1")#设置链接地址
 class AllfullspidersearchPipeline(object):
     def process_item(self, item, spider):
         return item
@@ -166,4 +167,5 @@ class ElasicsearchPipline(object):
         article.suggest = gen_suggest(article._doc_type.index,
                                       ((article.title, 10), (article.dianzang, 7)))  # 用来控制模糊搜索设置权重weight
         article.save()
+        redis_cli.incr("jobberly_conner")
         return item
