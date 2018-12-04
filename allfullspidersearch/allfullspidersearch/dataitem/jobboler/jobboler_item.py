@@ -167,5 +167,5 @@ class ElasicsearchPipline(object):
         article.suggest = gen_suggest(article._doc_type.index,
                                       ((article.title, 10), (article.dianzang, 7)))  # 用来控制模糊搜索设置权重weight
         article.save()
-        redis_cli.incr("jobberly_conner")
+        redis_cli.incr("jobberly_conner")#把数据结果存放到内存中，便于搜索引擎获取内存数据
         return item
