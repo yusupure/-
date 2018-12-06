@@ -19,6 +19,7 @@
 # project = jobber
 # 
 # 信息：(py3scrapy) D:\jobber>scrapyd-deploy localhost -p jobber
+#此位置的localhost等于在project的名称，此名称与settings内新增设定: deploy:名称一致
 # 创建一个egg项目文档
 # 
 # 6） 安装curl
