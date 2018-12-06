@@ -22,10 +22,10 @@
 # 创建一个egg项目文档
 # 
 # 6） 安装curl
-# https://curl.haxx.se/windows/dl-7.62.0_1/openssl-1.1.1a_1-win32-mingw.zip
+# https://curl.haxx.se/windows/dl-7.62.0_1/curl-7.62.0_1-win64-mingw.zip
 # 配置环境：
 # 新建：CURL_HOME  ，解压上面下载文件路径
-# path:%CURL_HOME%\bin
+# path:%CURL_HOME%
 # 测试方法：curl --help没有报错代表正常安装了
 # 
 # 7)启动爬虫方法
