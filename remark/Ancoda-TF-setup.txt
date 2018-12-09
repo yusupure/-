@@ -14,3 +14,10 @@
 下载地址:https://mirrors.tuna.tsinghua.edu.cn/tensorflow/windows/cpu/tensorflow-1.1.0-cp35-cp35m-win_amd64.whl
 7.测试进入python
 8.import tensorflow as tf测试是否报错，没有代表成功安装
+
+
+第二种安装方法
+anacond 一样方法
+1.搜索安装方式
+anaconda show dhirschfeld/tensorflow
+2.conda install --channel https://conda.anaconda.org/dhirschfeld tensorflow
