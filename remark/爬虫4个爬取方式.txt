@@ -1,4 +1,5 @@
-1.import re#正则表达式
+#正则表达式
+1.import re
 A.re.match函数
 re.match( r'(.*) are (.*?) .*', line, re.M|re.I)
 print "matchObj.group() 
@@ -30,3 +31,6 @@ re.X 为了增加可读性，忽略空格和 # 后面的注释
 E.RE.findall
 字符串中找到正则表达式所匹配的所有子串，并返回一个列表，如果没有找到匹配的，则返回空列表。
 result1 = pattern.findall('runoob 123 google 456')
+
+
+
