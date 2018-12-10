@@ -1,0 +1,30 @@
+from bs4 import BeautifulSoup
+#soup = BeautifulSoup(html, 'lxml')
+#css选择器
+内容
+soup.select('.panel .panel-heading')
+for li in soup.select('li'):
+    print(li.get_text())
+
+获取属性
+or ul in soup.select('ul'):
+    print(ul['id'])
+    print(ul.attrs['id'])
+
+#标准选择器
+find_all可以根据标签名，属性，内容查找文档
+soup = BeautifulSoup(html, 'lxml')
+print(soup.find_all('ul'))
+print(type(soup.find_all('ul')[0]))
+
+attrs
+attrs可以传入字典的方式来查找标签，但是这里有个特殊的就是class,因为class在python中是特殊的字段，
+所以如果想要查找class相关的可以更改attrs={'class_':'element'}或者soup.find_all('',{"class":
+"element})，特殊的标签属性可以不写attrs，例如id
+print(soup.find_all(attrs={'id': 'list-1'}))
+print(soup.find_all(attrs={'name': 'elements'}))
+
+text
+结果返回的是查到的所有的text='Foo'的文本
+print(soup.find_all(text='Foo'))
+
