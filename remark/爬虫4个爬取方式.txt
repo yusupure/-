@@ -32,5 +32,13 @@ E.RE.findall
 字符串中找到正则表达式所匹配的所有子串，并返回一个列表，如果没有找到匹配的，则返回空列表。
 result1 = pattern.findall('runoob 123 google 456')
 
-
+XPATH
+from lxml.HTML import etree
+/从根节点选取xpath(‘/div’)从根节点上选取div节点
+//从匹配选择的当前节点选择文档中的节点，而不考虑它们的位置。xpath(‘//div’)从当前节点选取含有div节点的标签
+.选取当前节点xpath(‘./div’)选取当前节点下的div标签
+..选取当前节点的父节点xpath(‘../’)回到上一级节点
+@选取属性xpath(“//div[@id=’1001’]”)获取div标签中，含有ID属性且值为1001的标签
+and选取id值包含ma和in的div节点xpath(‘//div[contains(@id,”ma”) and contains(@id,”in”)]‘)选取id值包含ma和in的div节点
+text()选取节点文本包含ma的div节点xpath(‘//div[contains(text(),”ma”)]‘)选取节点文本包含ma的div节点
 
