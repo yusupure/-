@@ -1,0 +1,32 @@
+1.import re#正则表达式
+A.re.match函数
+re.match( r'(.*) are (.*?) .*', line, re.M|re.I)
+print "matchObj.group() 
+
+B.re.search方法
+re.search('www', 'www.runoob.com').span()# 在起始位置匹配
+print "searchObj.group(1)
+
+re.match与re.search的区别
+re.match只匹配字符串的开始，如果字符串开始不符合正则表达式，则匹配失败，函数返回None；而re.search匹配整个字符串，直到找到一个匹配。
+
+C.re.sub#替换
+re.sub(pattern, repl, string, count=0, flags=0)
+pattern : 正则中的模式字符串。
+repl : 替换的字符串，也可为一个函数。
+string : 要被查找替换的原始字符串。
+count : 模式匹配后替换的最大次数，默认 0 表示替换所有的匹配。
+
+D.re.compile
+compile 函数用于编译正则表达式，生成一个正则表达式（ Pattern ）对象，供 match() 和 search() 这两个函数使用
+re.I 忽略大小写
+re.L 表示特殊字符集 \w, \W, \b, \B, \s, \S 依赖于当前环境
+re.M 多行模式
+re.S 即为 . 并且包括换行符在内的任意字符（. 不包括换行符）
+re.U 表示特殊字符集 \w, \W, \b, \B, \d, \D, \s, \S 依赖于 Unicode 字符属性数据库
+re.X 为了增加可读性，忽略空格和 # 后面的注释
+
+
+E.RE.findall
+字符串中找到正则表达式所匹配的所有子串，并返回一个列表，如果没有找到匹配的，则返回空列表。
+result1 = pattern.findall('runoob 123 google 456')
