@@ -6,4 +6,5 @@
  3.cmd界面进入虚拟环境
  workon+(虚拟环境名称）
  可以通过 workon查找目前的虚拟环境
+ 4.退出环境：deactivate 回车就好
  
