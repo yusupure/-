@@ -1,0 +1,58 @@
+
+XPATH
+from lxml.HTML import etree
+/从根节点选取xpath(‘/div’)从根节点上选取div节点
+//从匹配选择的当前节点选择文档中的节点，而不考虑它们的位置。xpath(‘//div’)从当前节点选取含有div节点的标签
+.选取当前节点xpath(‘./div’)选取当前节点下的div标签
+..选取当前节点的父节点xpath(‘../’)回到上一级节点
+@选取属性xpath(“//div[@id=’1001’]”)获取div标签中，含有ID属性且值为1001的标签
+and选取id值包含ma和in的div节点xpath(‘//div[contains(@id,”ma”) and contains(@id,”in”)]‘)选取id值包含ma和in的div节点
+text()选取节点文本包含ma的div节点xpath(‘//div[contains(text(),”ma”)]‘)选取节点文本包含ma的div节点
+
+html = etree.HTML(myPage)
+
+# 一、定位
+divs1 = html.xpath('//div')
+divs2 = html.xpath('//div[@id]')
+divs3 = html.xpath('//div[@class="foot"]')
+divs4 = html.xpath('//div[@*]')
+divs5 = html.xpath('//div[1]')
+divs6 = html.xpath('//div[last()-1]')
+divs7 = html.xpath('//div[position()<3]')
+divs8 = html.xpath('//div|//h1')
+divs9 = html.xpath('//div[not(@*)]')
+
+# 二、取文本 text() 区别 html.xpath('string()')
+text1 = html.xpath('//div/text()')
+text2 = html.xpath('//div[@id]/text()')
+text3 = html.xpath('//div[@class="foot"]/text()')
+text4 = html.xpath('//div[@*]/text()')
+text5 = html.xpath('//div[1]/text()')
+text6 = html.xpath('//div[last()-1]/text()')
+text7 = html.xpath('//div[position()<3]/text()')
+text8 = html.xpath('//div/text()|//h1/text()')
+
+
+# 三、取属性 @
+value1 = html.xpath('//a/@href')
+value2 = html.xpath('//img/@src')
+value3 = html.xpath('//div[2]/span/@id')
+
+
+# 四、定位（进阶）
+# 1.文档(DOM)元素(Element)的find，findall方法
+divs = html.xpath('//div[position()<3]')
+for div in divs:
+    ass = div.findall('a')  # 这里只能找到:div->a, 找不到:div->p->a
+    for a in ass:
+        if a is not None:
+            #print(dir(a))
+            print(a.text, a.attrib.get('href')) #文档(DOM)元素(Element)的属性：text, attrib
+
+# 2.与1等价
+a_href = html.xpath('//div[position()<3]/a/@href')
+print(a_href)
+
+# 3.注意与1、2的区别
+a_href = html.xpath('//div[position()<3]//a/@href')
+print(a_href)
