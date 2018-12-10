@@ -1,0 +1,24 @@
+from pyquery import PyQuery as pq
+doc = pq(html)#获取html信息转换
+doc = pq(filename='index.html')#提取html文件
+语法CSS演示链接
+https://images2015.cnblogs.com/blog/997599/201706/997599-20170602224304383-1430515174.png
+1.获取属性值
+item = doc(".item-0.active a")
+#属性两个方法
+print(item.attr.href)
+print(item.attr('href'))
+标签内容
+a = doc("a").text()
+#修改内容
+li = doc('.item-0.active')
+print(li)
+print(li.attr('id','id_test'))
+print(li.css('font-size','20px'))
+#删除内容
+data = doc('.content')
+print(data.text())
+#删除所有a标签
+data.find('a').remove()
+#再次打印
+print(data.text())
