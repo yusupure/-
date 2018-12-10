@@ -1,9 +1,11 @@
  1.安装cmd界面下
  pip install virtualenvwrapper-win
- 2.创建虚拟环境
+ 2.建立虚拟环境路径
  默认创建的虚拟环境位于C:\Users\username\envs,可以通过环境变量 WORKON_HOME 来定制。
  通过计算机-->属性-->高级系统设置-->环境变量-->在系统变量中新建“变量名”：WORKON_HOME,变量值：“你自定义的路径”。
- 3.cmd界面进入虚拟环境
+ 3.创建环境
+ 创建python 虚拟环境：virtualenv py_django //cd到你想要去到的文件目录下
+ 4.cmd界面进入虚拟环境
  workon+(虚拟环境名称）
  可以通过 workon查找目前的虚拟环境
  4.退出环境：deactivate 回车就好
