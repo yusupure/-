@@ -10,7 +10,7 @@ import re
 
 from allfullspidersearch.settings import SQL_DATETIME_FORMAT,SQL_DATE_FORMAT
 
-es = connections.connections.create_connection(ZhuhuArticleType._doc_type.using, hosts = '192.168.7.126')
+es = connections.connections.create_connection(ZhuhuArticleType._doc_type.using)
 
 class ZhihuItemLoader(scrapy.Item):
     zhihu_url_id=scrapy.Field()#Id
@@ -20,9 +20,9 @@ class ZhihuItemLoader(scrapy.Item):
     zhihu_itemInner=scrapy.Field()#关注人
     zhihu_item=scrapy.Field()#浏览次数
 
-    def clean_data(self):
+    def clean_data(self):#处理数据方法
         self['zhihu_url_id'] = MD5_sh(self['zhihu_url_id'][0])
-        self['zhihu_title'] = self['zhihu_title'][0]  # 标题
+        self['zhihu_title'] = self['zhihu_title'][0] # 标题
         self['zhihu_commer'] =int(re.findall(r'(\d+).*',self['zhihu_commer'][0],re.S)[0])# 评论数
         self['zhihu_tags'] = ','.join(self['zhihu_tags'])# 标识
         self['zhihu_itemInner'] = int(self['zhihu_itemInner'][0])  # 关注人
@@ -34,11 +34,15 @@ class ZhihuItemLoader(scrapy.Item):
             values (%s,%s,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE zhihu_commer=VALUES(zhihu_commer),
             zhihu_itemInner=VALUES(zhihu_itemInner),zhihu_item=VALUES(zhihu_item)
         """
-        self.clean_data()
-        parmer=(self['zhihu_url_id'],self['zhihu_title'],self['zhihu_commer'],self['zhihu_tags'],
-                self['zhihu_itemInner'],self['zhihu_item'])
-        return (insert_sql,parmer)
+        #解除数据因重复导致无法写入系统出现报错问题，系统数据库方法来更新数据字段解除报错
+        #ON DUPLICATE KEY UPDATE zhihu_commer=VALUES(zhihu_commer),
+        #zhihu_itemInner=VALUES(zhihu_itemInner),zhihu_item=VALUES(zhihu_item)
 
+        self.clean_data()#获取当前已经处理好的数据
+        parmer=(self['zhihu_url_id'],self['zhihu_title'],self['zhihu_commer'],self['zhihu_tags'],
+                self['zhihu_itemInner'],self['zhihu_item'])#因在同一个CLASS内处理所以直接调用SELF来关联KEY即可
+        return (insert_sql,parmer)
+    #用于elasticsearch搜索引擎的关键词语拆分方法
     def gen_suggest(self,index, info_tuple):
         # 根据字符串生成所搜建议数据
         # python重要性titel:10
@@ -57,7 +61,7 @@ class ZhihuItemLoader(scrapy.Item):
                 suggest.append({"input": list(new_words), "weight": weight})
         return suggest
 
-
+    #传入elasticsearch数据方法同时生成关键词组合
     def elasticsearch_es_sql(self):
         self.clean_data()
         Article=ZhuhuArticleType()
@@ -130,7 +134,7 @@ class zhihusjsonItemLoader(scrapy.Item):
                 suggest.append({"input": list(new_words), "weight": weight})
         return suggest
 
-    def elasticsearch_es_sql(self):
+    def elasticsearch_anes_sql(self):
         self.clean_data()
         zhihu = ZhiHuAnswerIndex()
 
