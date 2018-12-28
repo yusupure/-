@@ -20,5 +20,8 @@ class zhihuspiderPipline(object):
 
 class zhihuanswerPipline(object):
     def process_item(self, item, spider):
-        item.elasticsearch_es_sql()
+        try:
+            item.elasticsearch_anes_sql()
+        except:
+            pass
         return item
