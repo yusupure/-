@@ -51,6 +51,7 @@ connect: {
 修改文件用于局域网访问信息：
 # The URL of the Elasticsearch instance to use for all your queries.
 elasticsearch.url: "http://192.168.7.126:9200"修改为本机IP地址
+server.host: "0.0.0.0"修改为全0
 
 5.curl命令
   curl-7.33.0-win64-ssl-sspi.exe
