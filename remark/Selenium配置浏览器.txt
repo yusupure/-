@@ -15,7 +15,8 @@ ChromeDriver v2.34 (2018-01-10)----------Supports Chrome v60-62
 ChromeDriver v2.33 (2018-01-10)----------Supports Chrome v58-60
 ChromeDriver v2.32 (2018-01-10)----------Supports Chrome v58-60
 ChromeDriver v2.31 (2018-01-10)----------Supports Chrome v56-58
-下载地址http://chromedriver.storage.googleapis.com/index.html
+下载地址：http://chromedriver.storage.googleapis.com/index.html
+淘宝镜像：http://npm.taobao.org/mirrors/chromedriver/
 
 
 
