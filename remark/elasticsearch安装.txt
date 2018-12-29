@@ -1,5 +1,10 @@
 1.首先安装JDK1.8以上版本:jdk-8u191-windows-x64.exe
-
+  系统环境变量设置：
+  系统变量：CLASSPATH :.;%JAVA_HOME%\lib;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\tools.jar
+           JAVA_HOME :C:\Program Files\Java\jdk1.8.0_191安装包位置
+           Path:%JAVA_HOME%\bin
+           
+           
 2.elasticsearc
 https://github.com/medcl/elasticsearch-rtf
 下载安装包，当前版本 Elasticsearch 5.1.1
