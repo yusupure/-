@@ -33,7 +33,18 @@ https://github.com/zt1115798334/elasticsearch-head-master
 安装cnpm：npm install -g cnpm --registry=https://registry.npm.taobao.org
 安装插件cnpm install
 执行命令cnpm run start
-
+修改内网访问IP
+修改Gruntfile.js
+connect: {
+        server: {
+            options: {
+                hostname: '0.0.0.0',修改此处IP
+                port: 9100,
+                base: '.',
+                keepalive: true
+            }
+        }
+    } 
 
 4.kibana
 需要匹配Elasticsearch版本下载对应的kibana-5.1.1-windows-x86.exe
