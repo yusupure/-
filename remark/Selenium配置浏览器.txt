@@ -1,0 +1,22 @@
+2selenium 函数使用
+版本 60.0.3112.78（正式版本） （32 位）
+ChromeDriver v2.45 (2018-12-10)----------Supports Chrome v70-72
+ChromeDriver v2.44 (2018-11-19)----------Supports Chrome v69-71
+ChromeDriver v2.43 (2018-10-16)----------Supports Chrome v69-71
+ChromeDriver v2.42 (2018-09-13)----------Supports Chrome v68-70
+ChromeDriver v2.41 (2018-07-27)----------Supports Chrome v67-69
+ChromeDriver v2.40 (2018-06-07)----------Supports Chrome v66-68
+ChromeDriver v2.39 (2018-05-30)----------Supports Chrome v66-68
+ChromeDriver v2.38 (2018-04-17)----------Supports Chrome v65-67
+ChromeDriver v2.37 (2018-03-16)----------Supports Chrome v64-66
+ChromeDriver v2.36 (2018-03-02)----------Supports Chrome v63-65
+ChromeDriver v2.35 (2018-01-10)----------Supports Chrome v61-63
+ChromeDriver v2.34 (2018-01-10)----------Supports Chrome v60-62
+ChromeDriver v2.33 (2018-01-10)----------Supports Chrome v58-60
+ChromeDriver v2.32 (2018-01-10)----------Supports Chrome v58-60
+ChromeDriver v2.31 (2018-01-10)----------Supports Chrome v56-58
+下载地址http://chromedriver.storage.googleapis.com/index.html
+
+
+
+存放在CHROME目录C:\Users\wuzhaoqiang\AppData\Local\Google\Chrome\Application
