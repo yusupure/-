@@ -16,15 +16,17 @@ class ZhihuSpider(scrapy.Spider):
     allowed_domains = ['www.zhihu.com']
     # start_urls = ['https://www.zhihu.com']
     #登录后获取登录页面动态的新闻信息
-    url = 'https://www.zhihu.com/api/v3/feed/topstory/recommend?session_token=e6cd631e8aed41f5a4a7e5be48a05cce&desktop=true&limit=7&action=down&after_id=5'
-
+    #url = 'https://www.zhihu.com/api/v3/feed/topstory/recommend?session_token=e6cd631e8aed41f5a4a7e5be48a05cce&desktop=true&limit=7&action=down&after_id=5'
+    #获取地址更新2019
+    url='https://www.zhihu.com/api/v3/feed/topstory/recommend?session_token=b68e5e3d94ea0963738730ec6b0f443d&desktop=true&page_number=6&limit=6&action=down&after_id=3'
     def start_requests(self):
         # meta={'dont_redirect':True,'handle_httpstatus_list':[401,301]}取消SCRAPY内过滤错误返回CODE，取消重定向处理
         #读取页面URL地址，由于未知是否已经登录，强制通过meta取消重定向获取当前json信息，放到parse内执行
-        yield Request(url = self.url,meta={'dont_redirect':True,'handle_httpstatus_list':[401,301]},cookies =cookiesupload(), callback = self.parse)
+        yield Request(url = self.url,meta={'dont_redirect':True,'handle_httpstatus_list':[401,302]},cookies =cookiesupload(), callback = self.parse)
 
     def parse(self, response):
-        url_detail='https://www.zhihu.com/api/v4/questions/{}/answers?include=data%5B%2A%5D.is_normal%2Cadmin_closed_comment%2Creward_info%2Cis_collapsed%2Cannotation_action%2Cannotation_detail%2Ccollapse_reason%2Cis_sticky%2Ccollapsed_by%2Csuggest_edit%2Ccomment_count%2Ccan_comment%2Ccontent%2Ceditable_content%2Cvoteup_count%2Creshipment_settings%2Ccomment_permission%2Ccreated_time%2Cupdated_time%2Creview_info%2Crelevant_info%2Cquestion%2Cexcerpt%2Crelationship.is_authorized%2Cis_author%2Cvoting%2Cis_thanked%2Cis_nothelp%2Cis_labeled%3Bdata%5B%2A%5D.mark_infos%5B%2A%5D.url%3Bdata%5B%2A%5D.author.follower_count%2Cbadge%5B%2A%5D.topics&limit=5&offset=0&sort_by=default'
+        #信息地址更2019
+        url_detail='https://www.zhihu.com/api/v4/questions/{}/similar-questions?include=data%5B*%5D.answer_count%2Cauthor%2Cfollower_count&limit=5'
         #读取JSONlist 判断是否有存在code的这个字典key，判断当然登录cookies是否已经失效
         jsonlist = json.loads(response.text)
         if 'code' in jsonlist.keys():
@@ -73,7 +75,7 @@ class ZhihuSpider(scrapy.Spider):
             for jsonlists in jsonlist.get('data'):
                 #第二种传入ITMES值方法直接调入对应需要传入的方法CLASS名称
                 answer_item = zhihusjsonItemLoader()
-
+                #部分字段缺失，视乎通过js无法获取原来数据
                 answer_item["url_object_id"] = MD5_sh(jsonlists["url"])#对当前地址进行MD5编码，调用md5函数
                 answer_item["answer_id"] = jsonlists["id"]#提取回复人ID
                 answer_item["question_id"] = jsonlists["question"]["id"]#当前主题的ID值
@@ -83,8 +85,7 @@ class ZhihuSpider(scrapy.Spider):
                 answer_item["content"] = jsonlists["content"] if "content" in jsonlists else None #详细回复内容
                 answer_item["praise_num"] = jsonlists["voteup_count"]#回复总数
                 answer_item["comments_num"] = jsonlists["comment_count"]#回复条数
-                answer_item["url"] = "https://www.zhihu.com/question/{0}/answer/{1}".format(jsonlists["question"]["id"],
-                                                                                            jsonlists["id"])#当前ID的和详细页面信息ID
+                answer_item["url"] = "https://www.zhihu.com/question/{0}/answer/{1}".format(jsonlists["question"]["id"],jsonlists["id"])#当前ID的和详细页面信息ID
                 answer_item["update_time"] = jsonlists["updated_time"]#更新时间
                 answer_item["crawl_time"] = datetime.datetime.now()#更新日期
 
