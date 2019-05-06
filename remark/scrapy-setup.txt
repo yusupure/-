@@ -5,7 +5,7 @@ pip install lxml
 3.PyOpenssl
 pip install PyOpenssl
 4.Twisted
-http://www.lfd.uci.edu/gohlke/pythonlibs/#twisted
+https://www.lfd.uci.edu/~gohlke/pythonlibs/#numpy
 文件名称：Twisted-18.7.0-cp36-cp36m-win32.whl此为32位
 5.Pywin32
 pip install Pywin32
