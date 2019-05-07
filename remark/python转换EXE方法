@@ -1,0 +1,19 @@
+Python如何生成windows可执行的exe文件
+以下必须包安装
+pip install pyinstaller
+pip install PyQt5
+pip install -U setuptools 更新到最新版本
+pywin32
+
+执行语句
+单文件pyinstaller -F excel_oa_checkinout.py
+多文件pyinstaller -D excel_oa_checkinout.py mysql_link.py
+PY为需要打包的文件名称
+
+pyinstaller参数作用
+-F 表示生成单个可执行文件
+-D –onedir 创建一个目录，包含exe文件，但会依赖很多文件（默认选项）
+-w 表示去掉控制台窗口，这在GUI界面时非常有用。不过如果是命令行程序的话那就把这个选项删除吧
+-c –console, –nowindowed 使用控制台，无界面(默认)
+-p 表示你自己自定义需要加载的类路径，一般情况下用不到
+-i 表示可执行文件的图标
