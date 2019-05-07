@@ -1,9 +1,10 @@
 Python如何生成windows可执行的exe文件
+
 以下必须包安装
-pip install pyinstaller
-pip install PyQt5
-pip install -U setuptools 更新到最新版本
-pywin32
+pip install pyinstaller    | 3.4 https://github.com/pyinstaller/pyinstaller
+pip install PyQt5          |5.12
+pip install -U setuptools  |更新到最新版本41
+pip install pywin32        |224版本（https://sourceforge.net/projects/pywin32/files/pywin32/Build%20220/）
 
 执行语句
 单文件pyinstaller -F excel_oa_checkinout.py
@@ -15,5 +16,9 @@ pyinstaller参数作用
 -D –onedir 创建一个目录，包含exe文件，但会依赖很多文件（默认选项）
 -w 表示去掉控制台窗口，这在GUI界面时非常有用。不过如果是命令行程序的话那就把这个选项删除吧
 -c –console, –nowindowed 使用控制台，无界面(默认)
+    pyinstaller -c  xxxx.py
+    pyinstaller xxxx.py --console
 -p 表示你自己自定义需要加载的类路径，一般情况下用不到
 -i 表示可执行文件的图标
+
+–icon=将file.ico添加为可执行文件的资源(只对Windows系统有效)，改变程序的图标  pyinstaller -i  ico路径 xxxxx.py
